@@ -1,7 +1,6 @@
 # Laporan Proyek Machine Learning - Elfin Darmawan
 
 ## Domain Proyek
-### Latar Belakang
 
 Diabetes mellitus adalah gangguan metabolik kronis yang ditandai dengan tingginya kadar glukosa dalam darah (hiperglikemia). Penyakit ini menjadi salah satu penyebab utama kematian di dunia dan merupakan beban besar bagi sistem kesehatan global. Menurut World Health Organization (WHO), sekitar 422 juta orang di seluruh dunia hidup dengan diabetes, dan hampir 1,5 juta kematian setiap tahun disebabkan langsung oleh penyakit ini. Jumlah penderita diperkirakan akan terus meningkat secara signifikan dalam beberapa dekade mendatang, terutama di negara berkembang yang sedang mengalami transisi gaya hidup.
 
@@ -28,7 +27,7 @@ Diabetes merupakan penyakit kronis yang dapat menyebabkan komplikasi serius jika
 
 - Mengembangkan model prediksi diabetes berbasis machine learning menggunakan data kesehatan dasar.
 - Meningkatkan kemampuan deteksi dini diabetes melalui prediksi berbasis data.
-- Membandingkan performa dari beberapa model (Logistic Regression, Random Forest, dan KNN).
+- Membandingkan performa dari beberapa model (Logistic Regression, Support Vector Machine, Random Forest, dan KNN).
 - Menentukan model terbaik berdasarkan metrik evaluasi klasifikasi.
 
 ### Solution statements
@@ -383,3 +382,15 @@ F1-Score berguna ketika kita ingin menyeimbangkan antara false positives dan fal
 - SVM Cocok jika penting untuk menghindari false alarm (false positive), namun perlu ditingkatkan lagi untuk mendeteksi kasus positif secara lebih akurat.
 - Logistic Regression menunjukkan kinerja yang lebih baik dari KNN, tetapi tidak sebaik Random Forest.
 - KNN memiliki jumlah False Negatives yang cukup tinggi, menunjukkan bahwa model ini cenderung gagal mengidentifikasi beberapa pasien yang sebenarnya memiliki diabetes. Presisinya juga paling rendah, menandakan lebih banyak False Positives.
+
+## Kesimpulan
+Proyek ini berhasil membangun dan mengevaluasi model machine learning untuk melakukan prediksi terhadap penyakit diabetes berdasarkan dataset Diabetes. Dengan menerapkan beberapa model klasifikasi yaitu Logistic Regression, Support Vector Machine (SVM), Random Forest, dan K-Nearest Neighbors (KNN). Lalu mengevaluasi performa masing-masing model berdasarkan metrik Accuracy, Precision, Recall, dan F1-score. Hal ini telah memberikan dampak terhadap Business Understanding dan menjawab kebutuhan pada Problem Statements.
+
+Hasil evaluasi menunjukkan bahwa:
+- Model Random Forest memberikan performa terbaik secara keseluruhan, terutama dalam hal accuracy dan recall, yang sangat penting dalam konteks medis, karena dapat mengurangi kemungkinan kesalahan prediksi pasien yang sebenarnya menderita diabetes (false negative).
+- Model Logistic Regression dan SVM juga menunjukkan performa yang kompetitif, dengan kelebihan dalam interpretabilitas dan kemampuan menangani data high-dimensional (SVM).
+- Model KNN kurang optimal pada dataset ini, kemungkinan karena sensitivitas terhadap skala dan outlier.
+
+Selama proses pengembangan, dilakukan tahapan exploratory data analysis (EDA) untuk memahami distribusi data, mendeteksi outlier, serta mengevaluasi korelasi antar fitur. Selanjutnya, dilakukan proses normalisasi untuk memastikan bahwa fitur-fitur numerik berada pada skala yang sama, yang sangat penting untuk model seperti KNN dan SVM.
+ 
+
