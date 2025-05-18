@@ -201,6 +201,10 @@ Logistic Regression adalah algoritma supervised learning yang digunakan untuk kl
 
 ### 2. Support Vector Machine (SVM)
 SVM adalah algoritma klasifikasi (juga bisa digunakan untuk regresi) yang mencari hyperplane terbaik yang memisahkan dua kelas dengan margin terbesar. SVM bekerja sangat baik untuk data linier dan non-linier dengan bantuan kernel trick.
+Rumus Hyperplane:
+
+![SVM](SVM.png)
+
 - Kelebihan
    - Efektif di ruang berdimensi tinggi.
    - Cocok untuk data yang tidak linier (dengan kernel RBF/polynomial).
