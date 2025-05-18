@@ -36,6 +36,7 @@ Untuk mencapai tujuan tersebut, berikut solusi yang dirancang:
 
 1. Membangun beberapa model machine learning:
    - **Logistic Regression:** Sebagai baseline model karena sederhana dan interpretatif.
+   - **Support Vector Machine:** Kuat dalam pemisahan kelas non-linear.
    - **Random Forest:** Untuk menangani hubungan non-linear dan interaksi antar fitur.
    - **K-Nearest Neighbors (KNN):** Sebagai metode berbasis jarak yang mudah digunakan.
 2. Melakukan training dan evaluasi model menggunakan data yang telah dibersihkan dan diproses.
@@ -183,13 +184,56 @@ Tahap ini adalah memilih dan melatih model machine learning untuk masalah terkai
 
 Disini saya menggunakan lebih dari 1 model untuk mencari model yang terbaik untuk mendeteksi diabetes, antara lain:
 
-1. Logistic Regression
+### 1. Logistic Regression
    
 Logistic Regression adalah algoritma supervised learning yang digunakan untuk klasifikasi biner. Model ini memprediksi probabilitas suatu kelas berdasarkan fungsi logistik (sigmoid). Interpretasi model relatif mudah (kita bisa melihat koefisien fitur), efisien secara komputasi, dan bekerja baik untuk masalah klasifikasi linear.
 
-   
-3. Random Forest: Lebih tahan terhadap outlier dalam data dibandingkan beberapa model lain, Kuat terhadap overfitting, dapat menangani data non-linear dan interaksi fitur dengan baik, memberikan feature importance.
-4. K-Nearest Neighbors (KNN): Mudah diimplementasikan, tidak membuat asumsi tentang distribusi data.
+![log.reg](logisticregression.png)
+
+   - Kelebihan:
+      - Sederhana dan cepat dilatih.
+      - Mudah diinterpretasi (koefisien → pentingnya fitur).
+      - Cocok untuk data yang linier terpisah.
+   - Kekurangan:
+      - Kurang akurat jika hubungan antar fitur dan target tidak linier.
+      - Tidak bekerja baik jika banyak outlier atau data tidak seimbang.
+      - Tidak menangani hubungan non-linear dengan baik.
+
+### 2. Support Vector Machine (SVM)
+SVM mencari hyperplane terbaik yang memisahkan kelas dalam ruang fitur. Bisa menangani data linier dan non-linier menggunakan kernel trick.
+- Kelebihan
+   - Efektif di ruang berdimensi tinggi.
+   - Cocok untuk data yang tidak linier (dengan kernel RBF/polynomial).
+   - Tahan terhadap outlier dalam beberapa kasus.
+- Kekurangan
+   - Waktu pelatihan lambat untuk dataset besar.
+   - Sulit diinterpretasikan.
+   - Sensitif terhadap pemilihan kernel dan parameter C, gamma.
+
+### 3. Random Forest
+Random Forest adalah algoritma machine learning yang kuat dan serbaguna, termasuk dalam kategori algoritma ensemble dan sering digunakan untuk tugas klasifikasi dan regresi. 
+Berikut Rumus dari Random Forest
+
+- Untuk Klasifikasi
+
+
+- Kelebihan
+   - Lebih tahan terhadap outlier dalam data dibandingkan beberapa model lain
+   - Kuat terhadap overfitting
+   - Dapat menangani data non-linear dan interaksi fitur dengan baik
+   - Memberikan feature importance.
+- Kekurangan
+   - Kurang interpretabel.
+   - Waktu komputasi dan penyimpanan lebih besar.
+   - Bisa bias terhadap kelas mayoritas jika data tidak seimbang dan dataset yang besar.
+
+### 4. K-Nearest Neighbors (KNN)
+KNN adalah algoritma berbasis instance. Untuk memprediksi kelas suatu titik, ia melihat k tetangga terdekat dan memilih kelas mayoritas dari mereka.
+- Euclidean Distance
+  
+![euclidean](Euclidean.png)
+
+Mudah diimplementasikan, tidak membuat asumsi tentang distribusi data.
 
 **Rubrik/Kriteria Tambahan (Opsional)**: 
 - Menjelaskan kelebihan dan kekurangan dari setiap algoritma yang digunakan.
