@@ -118,19 +118,28 @@ Jumlah data duplikat: 0
 Pada tahap ini adalah pengecekan jumlah data duplikat, bisa kita lihat bahwa tidak ada data duplikat sehingga bisa melanjutkan ke tahap selanjutnya yaitu mengecek distribusi fitur dan outliers.
 
 - Distribusi Fitur
+  
 ![distribusi](BarchartDistribusi.png)
+
 `Pregnancies` dan `DiabetesPedigreeFunction` cenderung right-skewed, dengan sebagian besar nilai berada di sisi kiri dan ekor yang memanjang ke kanan. `Glucose`, `BloodPressure`, `BMI`, dan `Age` distribusinya tampak lebih mendekati distribusi normal, meskipun dengan sedikit skewness pada beberapa fitur. `SkinThickness` dan `Insulin` sangat right-skewed, dengan banyak nilai terkonsentrasi di nilai rendah dan beberapa nilai ekstrem yang tinggi.
 
 - Boxplot untuk melihat Outlier (Tanpa Outcome)
+  
 ![boxplot](BoxplotFitur.png)
+
 Visualisasi boxplot dengan jelas memperlihatkan keberadaan outlier, terutama pada fitur Insulin yang memiliki sebaran nilai ekstrem yang cukup jauh. Fitur SkinThickness juga menunjukkan beberapa nilai di luar batas normal. Meskipun demikian, mengingat tujuan proyek ini adalah mendeteksi dini diabetes, keberadaan nilai-nilai ekstrem ini dipertahankan. Boxplot juga mengindikasikan adanya perbedaan rentang data yang cukup besar antar fitur. Misalnya, fitur Insulin memiliki skala nilai yang jauh lebih tinggi dibandingkan fitur DiabetesPedigreeFunction. Variasi rentang ini menjadi pertimbangan penting untuk tahap pemodelan machine learning. Jika tidak ditangani, model dapat menjadi bias terhadap fitur dengan skala yang lebih besar. Oleh karena itu, normalisasi atau standarisasi fitur kemungkinan akan diperlukan untuk memastikan semua fitur berkontribusi secara adil dalam membangun model prediksi diabetes yang akurat.
 
 - Mengamati Hubungan antar fitur
+
 ![pairplot](Pairplot.png)
+
 `Glucose` dan `BMI` menunjukkan hubungan positif, semakin tinggi kadar glukosa, cenderung BMI juga meningkat. `Pregnancies` dan `Age` menunjukkan hubungan positif, usia yang lebih tua cenderung memiliki jumlah kehamilan lebih banyak. `BMI` vs `Insulin` dan `Glucose` vs `Insulin` juga menunjukkan tren naik, meskipun dengan sebaran yang longgar. Banyak pasangan fitur menunjukkan pola acak (misalnya, `SkinThickness` vs `BloodPressure`), menunjukkan tidak ada korelasi linear yang jelas.
 
+
 - Korelasi antar fitur
+  
 ![korelasi](Heatmap.png)
+
 `Glucose (0.47)`: Korelasi positif terkuat dengan Outcome. Artinya, semakin tinggi kadar glukosa, semakin besar kemungkinan individu terkena diabetes. `BMI (0.29)`: Korelasi sedang, menunjukkan pengaruh obesitas terhadap risiko diabetes. `Age (0.24)` dan `Pregnancies (0.22)`: Semakin tua usia dan semakin banyak kehamilan, sedikit meningkatkan risiko. `DiabetesPedigreeFunction (0.17)`: Juga memberi kontribusi, meski kecil.
 
 ## Data Preparation
@@ -146,9 +155,41 @@ scaled_df['Outcome'] = df['Outcome']
 ```
 Standardisasi adalah teknik untuk mengubah skala fitur-fitur dalam dataset sehingga memiliki rata-rata (mean) sebesar 0 dan deviasi standar (standard deviation) sebesar 1. Melakukan normalisasi pada dataframe tanpa kolom 'Outcome' atau hanya melakukan normalisasi pada kolom input. Lalu membuat dataframe baru setelah normalisasi dan menggabungkan kolom 'Outcome' ke dataframe yang sudah dinormalisasi. Proses normalisasi ini bertujuan agar tidak mengurangi bias ketika modeling terhadap fitur.
 
+![scaledhead](scaledhead.png)
 
+Fitur-fitur numerik dalam dataset (Pregnancies hingga Age) telah berhasil distandardisasi, yang ditunjukkan oleh nilai-nilai yang sekarang memiliki rentang di sekitar nol dan tidak lagi mencerminkan skala aslinya. Hal ini diperlukan agar algoritma machine learning tidak bias terhadap fitur dengan skala yang lebih besar. Untuk kolom 'Outcome' tetap berisi nilai asli (0 dan 1) karena kolom tersebut merupakan variabel target.
+
+### Split Dataset
+Memisahkan fitur (X) dan target (y) dari dataframe untuk melanjutkan ke tahap modeling dan evaluasi model.
+```python
+# Memisahkan Data menjadi Training dan Test Set
+X = scaled_df.drop('Outcome', axis=1)  # Fitur
+y = scaled_df['Outcome']  # Target
+```
+Lalu membagi data menjadi 70% data latih dan 30% data uji, data latih digunakan untuk melatih atau membangun model dan data uji digunakan untuk mengevaluasi model yang sudah dibangun. Ketika model diuji dengan data yang belum pernah dilihat atau dilatih sebelumnya, model bisa memberikan gambaran yang akurat.
+```python
+# Split data menjadi 70/30
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42)
+```
+Sehingga ukuran sampel untuk data latih dan data uji sebagai berikut:
+```bash
+Ukuran data latih: 537 | Ukuran data uji: 231
+```
 ## Modeling
-Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
+Tahap ini adalah memilih dan melatih model machine learning untuk masalah terkait klasifikasi (dalam kasus ini, memprediksi apakah seseorang memiliki diabetes atau tidak) berdasarkan input di dataset.
+
+**Memilih Model yang Akan Digunakan**
+
+Disini saya menggunakan lebih dari 1 model untuk mencari model yang terbaik untuk mendeteksi diabetes, antara lain:
+
+1. Logistic Regression
+   
+Logistic Regression adalah algoritma supervised learning yang digunakan untuk klasifikasi biner. Model ini memprediksi probabilitas suatu kelas berdasarkan fungsi logistik (sigmoid). Interpretasi model relatif mudah (kita bisa melihat koefisien fitur), efisien secara komputasi, dan bekerja baik untuk masalah klasifikasi linear.
+
+   
+3. Random Forest: Lebih tahan terhadap outlier dalam data dibandingkan beberapa model lain, Kuat terhadap overfitting, dapat menangani data non-linear dan interaksi fitur dengan baik, memberikan feature importance.
+4. K-Nearest Neighbors (KNN): Mudah diimplementasikan, tidak membuat asumsi tentang distribusi data.
 
 **Rubrik/Kriteria Tambahan (Opsional)**: 
 - Menjelaskan kelebihan dan kekurangan dari setiap algoritma yang digunakan.
