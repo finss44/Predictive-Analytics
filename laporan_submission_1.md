@@ -188,6 +188,8 @@ Logistic Regression adalah algoritma supervised learning yang digunakan untuk kl
 
 ![log.reg](logisticregression.png)
 
+**Parameter yang digunakan:** `random_state=42`, menetapkan seed untuk pengacakan internal guna memastikan hasil yang konsisten/reproducible saat model dijalankan berulang kali.
+
    - Kelebihan:
       - Sederhana dan cepat dilatih.
       - Mudah diinterpretasi (koefisien → pentingnya fitur).
@@ -203,6 +205,10 @@ Rumus Hyperplane:
 
 ![SVM](SVM.png)
 
+**Parameter yang digunakan:**
+- `kernel='rbf'`: Menggunakan Radial Basis Function (RBF) sebagai fungsi kernel. Kernel ini umum digunakan dan cocok untuk data yang tidak terpisah secara linear.
+- `random_state=42`: Seed untuk pengacakan, berpengaruh saat proses fitting menggunakan teknik tertentu seperti shrinking heuristics atau probabilistic outputs.
+  
 - Kelebihan
    - Efektif di ruang berdimensi tinggi.
    - Cocok untuk data yang tidak linier (dengan kernel RBF/polynomial).
@@ -224,6 +230,8 @@ Berikut Rumus dari Random Forest:
   
 ![rfregresi](RFRegresi.png)
 
+**Parameter yang digunakan:** `random_state=42`, menetapkan seed untuk memastikan konsistensi hasil karena Random Forest menggunakan metode ensemble dari banyak decision tree yang dibentuk secara acak.
+
 - Kelebihan
    - Lebih tahan terhadap outlier dalam data dibandingkan beberapa model lain
    - Kuat terhadap overfitting
@@ -239,6 +247,11 @@ KNN adalah algoritma berbasis instance. Untuk memprediksi kelas suatu titik, ia 
 - Euclidean Distance
   
 ![euclidean](Euclidean.png)
+
+**Parameter yang digunakan:** (Default)
+- `n_neighbors=5`: Jumlah tetangga terdekat default.
+- `weights='uniform'`: Semua tetangga punya bobot yang sama.
+- `metric='minkowski'`: Gunakan jarak Minkowski (bentuk umum dari Euclidean dan Manhattan).
 
 - Kelebihan
   - Sederhana dan mudah dipahami.
