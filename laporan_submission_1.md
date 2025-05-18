@@ -178,7 +178,7 @@ Ukuran data latih: 537 | Ukuran data uji: 231
 ## Modeling
 Tahap ini adalah memilih dan melatih model machine learning untuk masalah terkait klasifikasi (dalam kasus ini, memprediksi apakah seseorang memiliki diabetes atau tidak) berdasarkan input di dataset.
 
-**Memilih Model yang Akan Digunakan**
+### **Memilih Model yang Akan Digunakan**
 
 Disini saya menggunakan lebih dari 1 model untuk mencari model yang terbaik untuk mendeteksi diabetes, antara lain:
 
