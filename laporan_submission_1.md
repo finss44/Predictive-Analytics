@@ -11,13 +11,12 @@ Kebanyakan deteksi diabetes masih dilakukan melalui pemeriksaan langsung seperti
 Dengan kemajuan teknologi data dan machine learning, kini dimungkinkan untuk membangun sistem yang dapat memprediksi kemungkinan seseorang menderita diabetes hanya dari data kesehatan dasar seperti kadar glukosa, tekanan darah, indeks massa tubuh (BMI), jumlah kehamilan, usia, dan riwayat keluarga.
 
 ### Referensi:
-World Health Organization. (2021). Diabetes. https://www.who.int/news-room/fact-sheets/detail/diabetes
+World Health Organization. (2021). Diabetes. Retrieved from https://www.who.int/news-room/fact-sheets/detail/diabetes
 
-American Diabetes Association. (2020). Standards of Medical Care in Diabetes. https://care.diabetesjournals.org
+American Diabetes Association. (2020). Standards of medical care in diabetes—2020 abridged for primary care providers. Clinical Diabetes, 38(1), 10–38. https://care.diabetesjournals.org
 
-Centers for Disease Control and Prevention (CDC).
-National Diabetes Statistics Report (2020).
-https://www.cdc.gov/diabetes/data/statistics-report/index.html
+Rustam, F., Al-Shamayleh, A. S., Shafique, R., Obregon, S. A., Iglesias, R. C., Gonzalez, J. P. M., & Ashraf, I. (2024). Enhanced detection of diabetes mellitus using novel ensemble feature engineering approach and machine learning model. Scientific Reports, 14(1), 2479. https://doi.org/10.1038/s41598-024-74357-w
+
 ## Business Understanding
 ### Problem Statements
 
@@ -157,7 +156,7 @@ Standardisasi adalah teknik untuk mengubah skala fitur-fitur dalam dataset sehin
 
 ![scaledhead](scaledhead.png)
 
-Fitur-fitur numerik dalam dataset (Pregnancies hingga Age) telah berhasil distandardisasi, yang ditunjukkan oleh nilai-nilai yang sekarang memiliki rentang di sekitar nol dan tidak lagi mencerminkan skala aslinya. Hal ini diperlukan agar algoritma machine learning tidak bias terhadap fitur dengan skala yang lebih besar. Untuk kolom 'Outcome' tetap berisi nilai asli (0 dan 1) karena kolom tersebut merupakan variabel target.
+Fitur-fitur numerik dalam dataset (`Pregnancies` hingga `Age`) telah berhasil distandardisasi, yang ditunjukkan oleh nilai-nilai yang sekarang memiliki rentang di sekitar nol dan tidak lagi mencerminkan skala aslinya. Hal ini diperlukan agar algoritma machine learning tidak bias terhadap fitur dengan skala yang lebih besar. Untuk kolom `Outcome` tetap berisi nilai asli (0 dan 1) karena kolom tersebut merupakan variabel target.
 
 ### Split Dataset
 Memisahkan fitur (X) dan target (y) dari dataframe untuk melanjutkan ke tahap modeling dan evaluasi model.
@@ -378,12 +377,13 @@ F1-Score berguna ketika kita ingin menyeimbangkan antara false positives dan fal
 
 ![conmetriksmodel](ConMatrixModel.png)
 
-- **Random Forest** memiliki jumlah True Negatives dan True Positives tertinggi, serta jumlah False Positives dan False Negatives terendah. Ini secara visual mengkonfirmasi kinerja yang lebih baik.
-- SVM Cocok jika penting untuk menghindari false alarm (false positive), namun perlu ditingkatkan lagi untuk mendeteksi kasus positif secara lebih akurat.
-- Logistic Regression menunjukkan kinerja yang lebih baik dari KNN, tetapi tidak sebaik Random Forest.
+- **Random Forest** secara visual menunjukkan kinerja terbaik karena memiliki jumlah true positive dan true negative yang tinggi, serta jumlah false positive dan false negative yang relatif rendah, terutama dalam meminimalkan false negative (kesalahan dalam tidak mendeteksi pasien diabetes).
+- Support Vector Machine memiliki kinerja yang baik dalam memprediksi kasus negatif (TN) dan memiliki jumlah false positive yang paling rendah, namun jumlah true positive-nya sedikit lebih rendah dari Random Forest.
+- Logistic Regression menunjukkan kinerja yang cukup baik, berada di antara SVM dan Random Forest.
 - KNN memiliki jumlah False Negatives yang cukup tinggi, menunjukkan bahwa model ini cenderung gagal mengidentifikasi beberapa pasien yang sebenarnya memiliki diabetes. Presisinya juga paling rendah, menandakan lebih banyak False Positives.
 
-## Kesimpulan
+## Kesimpulan dan Rekomendasi
+### Kesimpulan
 Proyek ini telah membangun dan mengevaluasi model machine learning untuk melakukan prediksi terhadap penyakit diabetes berdasarkan dataset Diabetes. Dengan menerapkan beberapa model klasifikasi yaitu Logistic Regression, Support Vector Machine (SVM), Random Forest, dan K-Nearest Neighbors (KNN). Hal ini telah memberikan dampak terhadap Business Understanding dan menjawab kebutuhan pada Problem Statements. Selain itu goals yang dibuat telah tercapai yaitu mengembangkan model dan meningkatkan deteksi dini diabetes berbasis data. 
 
 Dengan menerapkan Logistic Regression sebagai baseline model, model lain seperti SVM, Random Forest, dan KNN juga membantu untuk memperkuat kemampuan model untuk data yang lebih kompleks. Lalu mengevaluasi performa masing-masing model berdasarkan metrik Accuracy, Precision, Recall, dan F1-score. Hal ini menunjukan bahwa solution statements yang dibangun berjalan dengan baik dan memberikan dampak yang cukup signifikan.
@@ -398,3 +398,16 @@ Selama proses pengembangan, dilakukan tahapan exploratory data analysis (EDA) un
 Proyek ini berhasil menunjukkan bagaimana teknologi machine learning dapat dimanfaatkan secara efektif untuk membantu proses prediksi penyakit diabetes berdasarkan data medis pasien. Dengan menggunakan dataset yang relevan dan melalui serangkaian proses mulai dari pra-pemrosesan data, pemilihan fitur, pelatihan model, hingga evaluasi performa, beberapa algoritma klasifikasi telah diterapkan. 
 
 Secara keseluruhan, proyek ini tidak hanya berhasil membangun sistem prediksi yang berfungsi dengan baik, tetapi juga memperlihatkan potensi besar integrasi data dan kecerdasan buatan dalam meningkatkan kualitas pelayanan kesehatan. Untuk kedepannya, sistem seperti ini dapat dikembangkan lebih lanjut dengan data yang lebih besar dan fitur yang lebih beragam, serta diintegrasikan dengan sistem informasi rumah sakit untuk mendukung diagnosis yang lebih cepat dan akurat.
+
+### Rekomendasi
+1. **Optimasi Model Terbaik (Random Forest)**
+   
+Lakukan hyperparameter tuning pada model Random Forest menggunakan teknik seperti GridSearchCV atau RandomizedSearchCV untuk mencari kombinasi parameter yang optimal dan berpotensi meningkatkan kinerja lebih lanjut.
+
+2. **Penanganan Ketidakseimbangan Kelas**
+
+Periksa lebih lanjut distribusi kelas pada variabel target ('Outcome'). Jika terdapat ketidakseimbangan yang signifikan (misalnya, jumlah pasien non-diabetes jauh lebih banyak dari pasien diabetes), pertimbangkan teknik seperti oversampling (SMOTE), undersampling, atau penggunaan bobot kelas dalam algoritma untuk mengatasi potensi bias model terhadap kelas mayoritas.
+
+3. **Monitoring dan Pembaruan Model**
+
+Model machine learning perlu dipantau secara berkala setelah diimplementasikan. Kinerja model dapat menurun seiring waktu karena perubahan dalam data. Rencanakan pembaruan dan pelatihan ulang model secara berkala dengan data yang lebih baru.
