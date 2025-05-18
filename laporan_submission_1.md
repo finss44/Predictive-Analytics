@@ -358,7 +358,7 @@ $$
 F1-Score berguna ketika kita ingin menyeimbangkan antara false positives dan false negatives. Semakin tinggi F1-Score, semakin baik model dalam memprediksi kelas minoritas secara akurat dan konsisten.
 
 ### Hasil Proyek Berdasarkan Metrik Evaluasi
-- Accuracy, Precision, Recall, F1-Score
+1. **Accuracy, Precision, Recall, F1-Score**
   
 | Model             | Accuracy | Precision | Recall | F1-Score |
 |--------------------| ---------|-----------|--------|----------|
@@ -367,10 +367,15 @@ F1-Score berguna ketika kita ingin menyeimbangkan antara false positives dan fal
 |**Random Forest**	   |       **0.757576**	|   **0.646341**	|   **0.6625**	| **0.654321** |
 |K-Nearest Neighbors	 |  0.692641	|   0.561644	|   0.5125	| 0.535948 |
 
-Random Forest menunjukkan kinerja terbaik secara keseluruhan berdasarkan semua metrik, terutama dalam hal akurasi, recall, dan F1-Score. Ini menjadikannya model yang paling menjanjikan untuk tugas klasifikasi ini berdasarkan hasil evaluasi ini.
-Support Vector Machine dan Logistic Regression memiliki kinerja yang cukup mirip dan berada di bawah Random Forest, tetapi jauh lebih baik daripada KNN. SVM menunjukkan presisi yang sedikit lebih baik, sementara Logistic Regression memiliki recall yang sedikit lebih tinggi (meskipun F1-Score SVM sedikit lebih baik).
-K-Nearest Neighbors memiliki kinerja yang paling buruk di antara keempat model berdasarkan semua metrik. Ini mengindikasikan bahwa KNN mungkin bukan pilihan yang baik untuk tugas klasifikasi ini dengan konfigurasi saat ini.
+- **Random Forest** menunjukkan kinerja terbaik secara keseluruhan berdasarkan semua metrik, terutama dalam hal akurasi, recall, dan F1-Score. Ini menjadikannya model yang paling menjanjikan untuk tugas klasifikasi ini berdasarkan hasil evaluasi ini.
+- Support Vector Machine dan Logistic Regression memiliki kinerja yang cukup mirip dan berada di bawah Random Forest, tetapi jauh lebih baik daripada KNN. SVM menunjukkan presisi yang sedikit lebih baik, sementara Logistic Regression memiliki recall yang sedikit lebih tinggi (meskipun F1-Score SVM sedikit lebih baik).
+- K-Nearest Neighbors memiliki kinerja yang paling buruk di antara keempat model berdasarkan semua metrik. Ini mengindikasikan bahwa KNN mungkin bukan pilihan yang baik untuk tugas klasifikasi ini dengan konfigurasi saat ini.
 
-- Confusion Matrix
+2. **Confusion Matrix**
 
 ![conmetriksmodel](ConMatrixModel.png)
+
+- **Random Forest** memiliki jumlah True Negatives dan True Positives tertinggi, serta jumlah False Positives dan False Negatives terendah. Ini secara visual mengkonfirmasi kinerja yang lebih baik.
+- SVM Cocok jika penting untuk menghindari false alarm (false positive), namun perlu ditingkatkan lagi untuk mendeteksi kasus positif secara lebih akurat.
+- Logistic Regression menunjukkan kinerja yang lebih baik dari KNN, tetapi tidak sebaik Random Forest.
+- KNN memiliki jumlah False Negatives yang cukup tinggi, menunjukkan bahwa model ini cenderung gagal mengidentifikasi beberapa pasien yang sebenarnya memiliki diabetes. Presisinya juga paling rendah, menandakan lebih banyak False Positives.
