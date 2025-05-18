@@ -200,7 +200,7 @@ Logistic Regression adalah algoritma supervised learning yang digunakan untuk kl
       - Tidak menangani hubungan non-linear dengan baik.
 
 ### 2. Support Vector Machine (SVM)
-SVM mencari hyperplane terbaik yang memisahkan kelas dalam ruang fitur. Bisa menangani data linier dan non-linier menggunakan kernel trick.
+SVM adalah algoritma klasifikasi (juga bisa digunakan untuk regresi) yang mencari hyperplane terbaik yang memisahkan dua kelas dengan margin terbesar. SVM bekerja sangat baik untuk data linier dan non-linier dengan bantuan kernel trick.
 - Kelebihan
    - Efektif di ruang berdimensi tinggi.
    - Cocok untuk data yang tidak linier (dengan kernel RBF/polynomial).
@@ -212,10 +212,15 @@ SVM mencari hyperplane terbaik yang memisahkan kelas dalam ruang fitur. Bisa men
 
 ### 3. Random Forest
 Random Forest adalah algoritma machine learning yang kuat dan serbaguna, termasuk dalam kategori algoritma ensemble dan sering digunakan untuk tugas klasifikasi dan regresi. 
-Berikut Rumus dari Random Forest
+Berikut Rumus dari Random Forest:
 
 - Untuk Klasifikasi
+  
+![rfklasifikasi](RFKlasifikasi.png)
 
+- Untuk Regresi
+  
+![rfregresi](RFRegresi.png)
 
 - Kelebihan
    - Lebih tahan terhadap outlier dalam data dibandingkan beberapa model lain
@@ -233,27 +238,139 @@ KNN adalah algoritma berbasis instance. Untuk memprediksi kelas suatu titik, ia 
   
 ![euclidean](Euclidean.png)
 
-Mudah diimplementasikan, tidak membuat asumsi tentang distribusi data.
+- Kelebihan
+  - Sederhana dan mudah dipahami.
+  - Tidak memerlukan pelatihan (lazy learner).
+  - Dapat bekerja baik pada data yang terdistribusi secara non-linier.
+- Kekurangan
+  - Sensitif terhadap fitur yang tidak distandarisasi (wajib scaling).
+  - Lambat saat prediksi pada dataset besar.
+  - Rentan terhadap noise dan fitur yang tidak relevan.
+ 
+### Training Model
+```python
+# Membuat Model
+models = {
+    "Logistic Regression": LogisticRegression(random_state=42),
+    "Support Vector Machine": SVC(kernel='rbf', random_state=42),
+    "Random Forest": RandomForestClassifier(random_state=42),
+    "K-Nearest Neighbors": KNeighborsClassifier()
+}
+```
+Menginisialisasi model yang akan digunakan yaitu Logistic Regression,Support Vector Machine, Random Forest, dan K-Nearest Neighbbors. Untuk Logistic Regression, SVM, dan Random Forest parameter `random_state=42` untuk produktibilitas, dan KNN tidak karena bersifat deterministik data dan berdasarkan jarak terdekatnya.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan kelebihan dan kekurangan dari setiap algoritma yang digunakan.
-- Jika menggunakan satu algoritma pada solution statement, lakukan proses improvement terhadap model dengan hyperparameter tuning. **Jelaskan proses improvement yang dilakukan**.
-- Jika menggunakan dua atau lebih algoritma pada solution statement, maka pilih model terbaik sebagai solusi. **Jelaskan mengapa memilih model tersebut sebagai model terbaik**.
+```python
+# Latih dan evaluasi model
+for i, (name, model) in enumerate(models.items()):
+    # Latih model
+    model.fit(X_train, y_train)
+    # Prediksi
+    y_pred = model.predict(X_test)
+
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred, average='binary')
+    recall = recall_score(y_test, y_pred, average='binary')
+    f1 = f1_score(y_test, y_pred, average='binary')
+    cm = confusion_matrix(y_test, y_pred)
+
+    con_metrics[name] = cm
+    evaluation_results.append({
+        "Model": name,
+        "Accuracy": accuracy,
+        "Precision": precision,
+        "Recall": recall,
+        "F1-Score": f1
+    })
+```
+Setelah membagi data untuk data latih dan data uji, model akan dilatih menggunakan data yang sudah dibagi tersebut yaitu X_train dan y_train.
+
+### Hasil Training Model dan Visualisasi Confusion Matrix
+Evaluasi Metrik Setiap Model:
+```bash
+       Model               Accuracy	   Precision	   Recall	F1-Score
+	
+Logistic Regression	   0.735931	   0.617284	   0.6250	0.621118
+Support Vector Machine	   0.748918	   0.648649	   0.6000	0.623377
+Random Forest	           0.757576	   0.646341	   0.6625	0.654321
+K-Nearest Neighbors	   0.692641	   0.561644	   0.5125	0.535948
+```
+Model diuji dengan data uji X_test dengan menampilkan hasil seperti diatas:
+- Accuracy: Proporsi total prediksi yang benar dari seluruh prediksi.
+- Precision: Proporsi prediksi positif yang sebenarnya positif.
+- Recall: Proporsi aktual positif yang berhasil diprediksi sebagai positif.
+- F1-Score: Rata-rata harmonik dari precision dan recall. Memberikan ukuran tunggal yang menyeimbangkan antara precision dan recall.
+
+### Model Terbaik dari Hasil Training
+Berdasarkan seluruh metrik evaluasi, **Random Forest dipilih sebagai model terbaik** untuk memprediksi diabetes karena memberikan hasil prediksi yang lebih akurat dan seimbang, terutama dalam mendeteksi pasien yang benar-benar menderita diabetes.
+- Akurasi tertinggi (75.76%)
+- Recall tertinggi (66.25%), penting dalam konteks deteksi diabetes karena dapat meminimalkan kesalahan pasien yang sebenarnya sakit tetapi tidak terdeteksi (false negative).
+- F1-Score tertinggi, menandakan keseimbangan baik antara Precision dan Recall.
 
 ## Evaluation
-Pada bagian ini anda perlu menyebutkan metrik evaluasi yang digunakan. Lalu anda perlu menjelaskan hasil proyek berdasarkan metrik evaluasi yang digunakan.
+Proyek ini menggunakan empat metrik utama untuk mengevaluasi performa model machine learning:
+1. Accuracy
+2. Precision
+3. Recall
+4. F1-Score
+   
+Semua metrik ini dihitung berdasarkan confusion matrix.
 
-Sebagai contoh, Anda memiih kasus klasifikasi dan menggunakan metrik **akurasi, precision, recall, dan F1 score**. Jelaskan mengenai beberapa hal berikut:
-- Penjelasan mengenai metrik yang digunakan
-- Menjelaskan hasil proyek berdasarkan metrik evaluasi
+**Confusion Matrix** adalah sebuah tabel yang digunakan untuk mengevaluasi kinerja model klasifikasi dengan membandingkan hasil prediksi model terhadap label yang sebenarnya (ground truth). Confusion matrix menampilkan jumlah prediksi yang benar dan salah berdasarkan kategori positif dan negatif. Berikut antara lain:
+- True Positive (TP): Model memprediksi positif, dan benar (pasien benar-benar menderita diabetes).
+- False Positive (FP): Model memprediksi positif, tapi salah (pasien tidak diabetes tapi diklasifikasi positif).
+- True Negative (TN): Model memprediksi negatif, dan benar (pasien tidak menderita diabetes).
+- False Negative (FN): Model memprediksi negatif, tapi salah (pasien menderita diabetes tapi diklasifikasi negatif).
 
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
+### 1. Accuracy
+Mengukur proporsi prediksi yang benar terhadap total data.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
+$$
+Accuracy = \frac{TP + TN}{TP + TN + FP + FN}
+$$
 
-**---Ini adalah bagian akhir laporan---**
+Metrik ini menunjukkan seberapa sering model membuat prediksi yang benar secara keseluruhan. Cocok digunakan jika data memiliki distribusi kelas yang seimbang (jumlah positif dan negatif relatif sama).
 
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
+### 2. Precision
+Precision mengukur berapa banyak dari prediksi positif yang benar-benar positif.
+
+$$
+Precision = \frac{TP}{TP + FP}
+$$
+
+Precision tinggi berarti model jarang menganggap orang sehat sebagai penderita diabetes (false positive rendah). Sangat penting saat konsekuensi dari kesalahan positif (FP) besar, misalnya salah memberi diagnosa penyakit yang membuat pasien menerima pengobatan tidak perlu.
+
+### 3. Recall
+Mengukur proporsi kasus positif yang berhasil terdeteksi dengan benar.
+
+$$
+Recall = \frac{TP}{TP + FN}
+$$
+
+Sangat penting dalam konteks medis karena kita tidak ingin pasien sakit tidak terdeteksi.
+
+### 4. F1-Score
+Harmonik rata-rata antara Precision dan Recall.
+
+$$
+F1\text{-}Score = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+$$
+
+F1-Score berguna ketika kita ingin menyeimbangkan antara false positives dan false negatives. Semakin tinggi F1-Score, semakin baik model dalam memprediksi kelas minoritas secara akurat dan konsisten.
+
+### Hasil Proyek Berdasarkan Metrik Evaluasi
+- Accuracy, Precision, Recall, F1-Score
+  
+| Model             | Accuracy | Precision | Recall | F1-Score |
+|--------------------| ---------|-----------|--------|----------|
+|Logistic Regression	|    0.735931 | 0.617284	|   0.6250 |	0.621118 |
+|Support Vector Machine	|   0.748918	|   0.648649	|   0.6000 |	0.623377 |
+|**Random Forest**	   |       **0.757576**	|   **0.646341**	|   **0.6625**	| **0.654321** |
+|K-Nearest Neighbors	 |  0.692641	|   0.561644	|   0.5125	| 0.535948 |
+
+Random Forest menunjukkan kinerja terbaik secara keseluruhan berdasarkan semua metrik, terutama dalam hal akurasi, recall, dan F1-Score. Ini menjadikannya model yang paling menjanjikan untuk tugas klasifikasi ini berdasarkan hasil evaluasi ini.
+Support Vector Machine dan Logistic Regression memiliki kinerja yang cukup mirip dan berada di bawah Random Forest, tetapi jauh lebih baik daripada KNN. SVM menunjukkan presisi yang sedikit lebih baik, sementara Logistic Regression memiliki recall yang sedikit lebih tinggi (meskipun F1-Score SVM sedikit lebih baik).
+K-Nearest Neighbors memiliki kinerja yang paling buruk di antara keempat model berdasarkan semua metrik. Ini mengindikasikan bahwa KNN mungkin bukan pilihan yang baik untuk tugas klasifikasi ini dengan konfigurasi saat ini.
+
+- Confusion Matrix
+
+![conmetriksmodel](ConMatrixModel.png)
