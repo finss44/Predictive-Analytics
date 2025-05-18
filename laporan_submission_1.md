@@ -287,7 +287,7 @@ for i, (name, model) in enumerate(models.items()):
 ```
 Setelah membagi data untuk data latih dan data uji, model akan dilatih menggunakan data yang sudah dibagi tersebut yaitu X_train dan y_train.
 
-### Hasil Training Model dan Visualisasi Confusion Matrix
+### Hasil Training Model
 Evaluasi Metrik Setiap Model:
 ```bash
        Model               Accuracy	   Precision	   Recall	F1-Score
@@ -384,7 +384,9 @@ F1-Score berguna ketika kita ingin menyeimbangkan antara false positives dan fal
 - KNN memiliki jumlah False Negatives yang cukup tinggi, menunjukkan bahwa model ini cenderung gagal mengidentifikasi beberapa pasien yang sebenarnya memiliki diabetes. Presisinya juga paling rendah, menandakan lebih banyak False Positives.
 
 ## Kesimpulan
-Proyek ini berhasil membangun dan mengevaluasi model machine learning untuk melakukan prediksi terhadap penyakit diabetes berdasarkan dataset Diabetes. Dengan menerapkan beberapa model klasifikasi yaitu Logistic Regression, Support Vector Machine (SVM), Random Forest, dan K-Nearest Neighbors (KNN). Lalu mengevaluasi performa masing-masing model berdasarkan metrik Accuracy, Precision, Recall, dan F1-score. Hal ini telah memberikan dampak terhadap Business Understanding dan menjawab kebutuhan pada Problem Statements.
+Proyek ini telah membangun dan mengevaluasi model machine learning untuk melakukan prediksi terhadap penyakit diabetes berdasarkan dataset Diabetes. Dengan menerapkan beberapa model klasifikasi yaitu Logistic Regression, Support Vector Machine (SVM), Random Forest, dan K-Nearest Neighbors (KNN). Hal ini telah memberikan dampak terhadap Business Understanding dan menjawab kebutuhan pada Problem Statements. Selain itu goals yang dibuat telah tercapai yaitu mengembangkan model dan meningkatkan deteksi dini diabetes berbasis data. 
+
+Dengan menerapkan Logistic Regression sebagai baseline model, model lain seperti SVM, Random Forest, dan KNN juga membantu untuk memperkuat kemampuan model untuk data yang lebih kompleks. Lalu mengevaluasi performa masing-masing model berdasarkan metrik Accuracy, Precision, Recall, dan F1-score. Hal ini menunjukan bahwa solution statements yang dibangun berjalan dengan baik dan memberikan dampak yang cukup signifikan.
 
 Hasil evaluasi menunjukkan bahwa:
 - Model Random Forest memberikan performa terbaik secara keseluruhan, terutama dalam hal accuracy dan recall, yang sangat penting dalam konteks medis, karena dapat mengurangi kemungkinan kesalahan prediksi pasien yang sebenarnya menderita diabetes (false negative).
@@ -393,4 +395,6 @@ Hasil evaluasi menunjukkan bahwa:
 
 Selama proses pengembangan, dilakukan tahapan exploratory data analysis (EDA) untuk memahami distribusi data, mendeteksi outlier, serta mengevaluasi korelasi antar fitur. Selanjutnya, dilakukan proses normalisasi untuk memastikan bahwa fitur-fitur numerik berada pada skala yang sama, yang sangat penting untuk model seperti KNN dan SVM.
  
+Proyek ini berhasil menunjukkan bagaimana teknologi machine learning dapat dimanfaatkan secara efektif untuk membantu proses prediksi penyakit diabetes berdasarkan data medis pasien. Dengan menggunakan dataset yang relevan dan melalui serangkaian proses mulai dari pra-pemrosesan data, pemilihan fitur, pelatihan model, hingga evaluasi performa, beberapa algoritma klasifikasi telah diterapkan. 
 
+Secara keseluruhan, proyek ini tidak hanya berhasil membangun sistem prediksi yang berfungsi dengan baik, tetapi juga memperlihatkan potensi besar integrasi data dan kecerdasan buatan dalam meningkatkan kualitas pelayanan kesehatan. Untuk kedepannya, sistem seperti ini dapat dikembangkan lebih lanjut dengan data yang lebih besar dan fitur yang lebih beragam, serta diintegrasikan dengan sistem informasi rumah sakit untuk mendukung diagnosis yang lebih cepat dan akurat.
