@@ -130,13 +130,22 @@ Visualisasi boxplot dengan jelas memperlihatkan keberadaan outlier, terutama pad
 `Glucose` dan `BMI` menunjukkan hubungan positif, semakin tinggi kadar glukosa, cenderung BMI juga meningkat. `Pregnancies` dan `Age` menunjukkan hubungan positif, usia yang lebih tua cenderung memiliki jumlah kehamilan lebih banyak. `BMI` vs `Insulin` dan `Glucose` vs `Insulin` juga menunjukkan tren naik, meskipun dengan sebaran yang longgar. Banyak pasangan fitur menunjukkan pola acak (misalnya, `SkinThickness` vs `BloodPressure`), menunjukkan tidak ada korelasi linear yang jelas.
 
 - Korelasi antar fitur
-![
-## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
+![korelasi](Heatmap.png)
+`Glucose (0.47)`: Korelasi positif terkuat dengan Outcome. Artinya, semakin tinggi kadar glukosa, semakin besar kemungkinan individu terkena diabetes. `BMI (0.29)`: Korelasi sedang, menunjukkan pengaruh obesitas terhadap risiko diabetes. `Age (0.24)` dan `Pregnancies (0.22)`: Semakin tua usia dan semakin banyak kehamilan, sedikit meningkatkan risiko. `DiabetesPedigreeFunction (0.17)`: Juga memberi kontribusi, meski kecil.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
+## Data Preparation
+Pada tahap ini adalah proses sistematis untuk mengubah data mentah menjadi bentuk yang bersih, konsisten, dan siap digunakan dalam pemodelan machine learning. Tahap ini dilakukan setelah EDA (Exploratory Data Analysis) dan sebelum pelatihan model. Banyak kasus menunjukkan bahwa model yang bagus tidak akan memberikan hasil optimal jika data yang digunakan tidak dipersiapkan dengan baik. Dari hasil EDA, kita bisa melihat apa saja yang perlu dilakukan selanjutnya agar model optimal yaitu seperti normalisasi dan split data.
+
+### Normalisasi Data Menggunakan Standarscaler
+```python
+# Normalisasi data (Standardisasi)
+scaler = StandardScaler()
+scaled_features = scaler.fit_transform(df_features)
+scaled_df = pd.DataFrame(scaled_features, columns=df_features.columns)
+scaled_df['Outcome'] = df['Outcome']
+```
+Standardisasi adalah teknik untuk mengubah skala fitur-fitur dalam dataset sehingga memiliki rata-rata (mean) sebesar 0 dan deviasi standar (standard deviation) sebesar 1. Melakukan normalisasi pada dataframe tanpa kolom 'Outcome' atau hanya melakukan normalisasi pada kolom input. Lalu membuat dataframe baru setelah normalisasi dan menggabungkan kolom 'Outcome' ke dataframe yang sudah dinormalisasi. Proses normalisasi ini bertujuan agar tidak mengurangi bias ketika modeling terhadap fitur.
+
 
 ## Modeling
 Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
