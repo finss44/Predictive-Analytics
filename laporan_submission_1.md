@@ -99,7 +99,7 @@ max	17.000000	199.000000	122.000000	99.000000	846.000000	67.100000	2.420000	81.0
 Terlihat nilai tengah setiap kolom, contohnya: Rata-rata jumlah kehamilan adalah sekitar 3.85. Rata-rata kadar glukosa adalah sekitar 120.9. Selain itu, mengukur seberapa tersebar nilai-nilai dalam setiap kolom dari nilai rata-ratanya. Standar deviasi yang lebih tinggi menunjukkan penyebaran data yang lebih luas. Contohnya, standar deviasi untuk Glucose (31.97) lebih tinggi daripada Pregnancies (3.37), menunjukkan variasi kadar glukosa yang lebih besar dibandingkan dengan jumlah kehamilan. Perhatikan juga standar deviasi yang sangat tinggi pada kolom Insulin (115.24), mengindikasikan variasi nilai insulin yang signifikan. Beberapa kolom memiliki nilai minimum 0, sehingga memerlukan penanganan khusus pada kolom tersebut.
 
 - Mengecek Missing Value dan data duplikat menggunakan `.isnull().sum()` dan `.duplicated().sum()`
-```
+```bash
 Pregnancies	                0
 Glucose	                        0
 BloodPressure	                0
@@ -112,13 +112,25 @@ Outcome	                        0
 dtype: int64
 ```
 Hasil dari pengecekan missing value diatas menunjukan bahwa tidak ada nilai null atau hilang dalam dataset untuk semua kolom yang diperiksa. Sehingga kita tidak perlu melakukan penanganan untuk missing value.
-```
+```bash
 Jumlah data duplikat: 0
 ```
 Pada tahap ini adalah pengecekan jumlah data duplikat, bisa kita lihat bahwa tidak ada data duplikat sehingga bisa melanjutkan ke tahap selanjutnya yaitu mengecek distribusi fitur dan outliers.
 
-- 
+- Distribusi Fitur
+![distribusi](BarchartDistribusi.png)
+`Pregnancies` dan `DiabetesPedigreeFunction` cenderung right-skewed, dengan sebagian besar nilai berada di sisi kiri dan ekor yang memanjang ke kanan. `Glucose`, `BloodPressure`, `BMI`, dan `Age` distribusinya tampak lebih mendekati distribusi normal, meskipun dengan sedikit skewness pada beberapa fitur. `SkinThickness` dan `Insulin` sangat right-skewed, dengan banyak nilai terkonsentrasi di nilai rendah dan beberapa nilai ekstrem yang tinggi.
 
+- Boxplot untuk melihat Outlier (Tanpa Outcome)
+![boxplot](BoxplotFitur.png)
+Visualisasi boxplot dengan jelas memperlihatkan keberadaan outlier, terutama pada fitur Insulin yang memiliki sebaran nilai ekstrem yang cukup jauh. Fitur SkinThickness juga menunjukkan beberapa nilai di luar batas normal. Meskipun demikian, mengingat tujuan proyek ini adalah mendeteksi dini diabetes, keberadaan nilai-nilai ekstrem ini dipertahankan. Boxplot juga mengindikasikan adanya perbedaan rentang data yang cukup besar antar fitur. Misalnya, fitur Insulin memiliki skala nilai yang jauh lebih tinggi dibandingkan fitur DiabetesPedigreeFunction. Variasi rentang ini menjadi pertimbangan penting untuk tahap pemodelan machine learning. Jika tidak ditangani, model dapat menjadi bias terhadap fitur dengan skala yang lebih besar. Oleh karena itu, normalisasi atau standarisasi fitur kemungkinan akan diperlukan untuk memastikan semua fitur berkontribusi secara adil dalam membangun model prediksi diabetes yang akurat.
+
+- Mengamati Hubungan antar fitur
+![pairplot](Pairplot.png)
+`Glucose` dan `BMI` menunjukkan hubungan positif, semakin tinggi kadar glukosa, cenderung BMI juga meningkat. `Pregnancies` dan `Age` menunjukkan hubungan positif, usia yang lebih tua cenderung memiliki jumlah kehamilan lebih banyak. `BMI` vs `Insulin` dan `Glucose` vs `Insulin` juga menunjukkan tren naik, meskipun dengan sebaran yang longgar. Banyak pasangan fitur menunjukkan pola acak (misalnya, `SkinThickness` vs `BloodPressure`), menunjukkan tidak ada korelasi linear yang jelas.
+
+- Korelasi antar fitur
+![
 ## Data Preparation
 Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
 
